@@ -19,12 +19,14 @@ app.post('/shorten', (req, res) => {
   
   const shortUrl = generateShortUrl();
   urlStore[shortUrl] = url;
+  console.log(urlStore)
   res.json({ shortUrl: `${req.protocol}://${req.get('host')}/${shortUrl}` });
 });
 
 // Endpoint to redirect to original URL
 app.get('/:shortUrl', (req, res) => {
   const { shortUrl } = req.params;
+  console.log(urlStore)
   const originalUrl = urlStore[shortUrl];
   if (!originalUrl) {
     return res.status(404).send('URL not found');
